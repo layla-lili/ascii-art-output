@@ -18,17 +18,18 @@ func main() {
 	asciiart.Init()
 
 	//check number of flag variable
-	numberOfFlags := flag.NFlag()
-	if numberOfFlags <=0 {
-		fmt.Println("At Least one flag should be used \n Usage: go run . [OPTION] [STRING] [BANNER]")
-		fmt.Println("EX: go run . --output=<fileName.txt> something standard")
-		os.Exit(1)
-	}
+	// numberOfFlags := flag.NFlag()
+	// if numberOfFlags <=0 {
+	// 	//fmt.Println("At Least one flag should be used \n Usage: go run . [OPTION] [STRING] [BANNER]")
+	// 	fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]")
+	// 	fmt.Println("EX: go run . --output=<fileName.txt> something standard")
+	// 	//os.Exit(1)
+	// }
 
 	//check Equal Sign
 	equalSign := false
 	cmdArgs := os.Args[1:]
-	re := regexp.MustCompile(`(?:-output|-o)\s*([^\s]*)\b`)
+	re := regexp.MustCompile(`(?:-output|-o|--output|--o)\s*([^\s]*)\b`)
    
     match := re.FindStringSubmatch(strings.Join(cmdArgs, " "))
     if match != nil {
