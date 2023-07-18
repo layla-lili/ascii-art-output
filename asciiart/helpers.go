@@ -46,7 +46,7 @@ func ReformatTT(chars [][]byte) []byte {
 	return ssB
 }
 
-// Main text preparation and printing function
+// Main text preparation 
 func AsciiPrep(s string) [][]byte {
 	words := Stob(s)
 	for i, slice := range words {
@@ -75,6 +75,33 @@ func AsciiPrep(s string) [][]byte {
 	//Printer(Text)
 	return Text
 }
+//Printer ascii printer ascii preperation 
+// Main text preparation and printing function
+func AsciiPrepx(s string) {
+	words := Stob(s)
+	for i, slice := range words {
+		if slice[0] == 10 && i == 0 {
+			Text = append(Text, []byte("\n"))
+			Indx = nil
+			continue
+		}
+		if slice[0] == 10 {
+			if words[i-1][0] == 10 {
+				Text = append(Text, []byte("\n"))
+				Indx = nil
+				continue
+			} else {
+				Indx = nil
+				continue
+			}
+		}
+		for _, char := range slice {
+			Indexer(char)
+		}
+		LineFmt(Indx)
+	}
+	Printer(Text)
+}
 
 // locate first line index for each char in string (word)
 func Indexer(b byte) {
@@ -96,6 +123,7 @@ func LineFmt(indx []int) {
 	for i := 0; i < 8; i++ {
 		var line []byte
 		for _, item := range indx {
+			
 			slice := Chars[item+i]
 			line = append(line, slice...)
 		}
