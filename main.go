@@ -95,7 +95,7 @@ func main() {
 
 	//check for non-flag missing argument
 	if err := run(); err != nil {
-		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		//fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]")
 		fmt.Println("EX: go run . --output=<fileName.txt> something standard")
 		return
