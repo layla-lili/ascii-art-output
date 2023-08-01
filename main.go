@@ -13,8 +13,17 @@ import (
 )
 
 func main() {
+	//non english case
+
+	for _, cha := range os.Args[1:] {
+		for _, ch := range cha {
+			if ch > 127 && ch < 32 {
+				fmt.Println("Only Standard Ascii character PLease!")
+				return
+			}
+		}
+	}
 	//Non-Flag Case
-	//fmt.Println(len(os.Args[1:]))
 	if len(os.Args[1:]) < 3 && !strings.Contains(strings.Join(os.Args[1:], " "), "-") {
 		if len(os.Args) == 0 {
 			fmt.Println("At leat one Argument Needed")
@@ -43,10 +52,11 @@ func main() {
 			return
 		}
 		if len(os.Args[1:]) == 2 {
+			//newargs[1] banner name
 			newargs := os.Args[1:]
-			//fmt.Println("argument is ", os.Args[1:])
+			
 			newstr := newargs[0]
-			fmt.Println(newargs[1])
+			
 			// Testing banner
 			readerx, err := fs.ReadFile(os.DirFS("./banners"), newargs[1]+".txt")
 			if err != nil {
@@ -75,18 +85,18 @@ func main() {
 	cmdArgs := os.Args[1:]
 
 	re := regexp.MustCompile(`(?:-output|-o|--output|--o)\s*([^\s]*)`)
-	
+
 	match := re.FindStringSubmatch(strings.Join(cmdArgs, " "))
-	
+
 	if match != nil {
-		
+
 		if strings.Contains(match[1], "=") {
-		
+
 			equalSign = true
 		}
 	}
 
-	if !equalSign {
+	if !equalSign && len(os.Args[1:]) > 0 {
 		fmt.Println("Error: Must have equal '=' after the flag")
 		fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]")
 		fmt.Println("EX: go run . --output=<fileName.txt> something standard")
@@ -142,8 +152,6 @@ func main() {
 	// fmt.Printmln(str)
 	/////////////////
 	// If output filename is specified, write ASCII art to file
-
-	//   if asciiart.Output != "" {
 	if strings.TrimPrefix(filepath.Ext(asciiart.Output), ".") != "txt" {
 		fmt.Println("File name should Ends with .txt!")
 		fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]")
@@ -170,7 +178,7 @@ func main() {
 	}
 }
 
-//////////////////////////////////
+// ////////////////////////////////
 func run() error {
 	// Parse command-line arguments
 	flag.Parse()
